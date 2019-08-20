@@ -1,9 +1,10 @@
-package com.famaridon;
+package com.famaridon.ci.tools;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.famaridon.ci.tools.BashExporter;
 import java.util.Arrays;
 import java.util.Scanner;
 import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator;
