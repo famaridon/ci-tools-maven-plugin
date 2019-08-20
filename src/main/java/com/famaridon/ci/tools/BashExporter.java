@@ -19,16 +19,21 @@ import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator
 
 public class BashExporter {
 
-  public static final String VARIABLE_PREFIX = "M2_CI_TOOLS_";
-  private final ExpressionEvaluator expressionEvaluator;
+  public static final String DEFAULT_VARIABLE_PREFIX = "M2_CI_TOOLS_";
+  public static final String BASH_SHEBANG = "#!/usr/bin/env bash";
   private static final String EXPORT_TEMPLATE = "export {0}=''{1}'';";
+
+  private final ExpressionEvaluator expressionEvaluator;
+  private String variablePrefix;
+
 
   public BashExporter(ExpressionEvaluator expressionEvaluator) {
     this.expressionEvaluator = expressionEvaluator;
+    this.variablePrefix = DEFAULT_VARIABLE_PREFIX;
   }
 
   public String export(List<String> expresions) throws ExpressionEvaluationException {
-    StringBuilder result = new StringBuilder("#!/bin/bash\n");
+    StringBuilder result = new StringBuilder(BASH_SHEBANG + '\n');
     for (String expresion : expresions) {
       result.append(this.exportLine(expresion)).append('\n');
     }
@@ -41,7 +46,14 @@ public class BashExporter {
   }
 
   protected String toEnvironmentVariable(String expression) throws ExpressionEvaluationException {
-    return VARIABLE_PREFIX +expression.toUpperCase().replaceAll("\\.", "_").replaceAll("-", "_");
+    return this.variablePrefix + expression.toUpperCase().replaceAll("\\.", "_").replaceAll("-", "_");
   }
 
+  public String getVariablePrefix() {
+    return variablePrefix;
+  }
+
+  public void setVariablePrefix(String variablePrefix) {
+    this.variablePrefix = variablePrefix == null ? "" : variablePrefix;
+  }
 }

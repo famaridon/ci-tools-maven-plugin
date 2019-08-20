@@ -32,7 +32,8 @@ public class BashExporterUTest {
 
     try (Scanner scanner = new Scanner(output);) {
       assertTrue("bash MUST have hashbang", scanner.hasNextLine());
-      assertEquals("hashbang MUST BE #!/bin/bash", "#!/bin/bash", scanner.nextLine());
+      assertEquals("hashbang MUST BE " + BashExporter.BASH_SHEBANG, BashExporter.BASH_SHEBANG,
+          scanner.nextLine());
       assertEquals("export M2_CI_TOOLS_PROJECT_ARTIFACTID='project-to-test';", scanner.nextLine());
       assertEquals("export M2_CI_TOOLS_PROJECT_VERSION='1.0.0';", scanner.nextLine());
       assertEquals("export M2_CI_TOOLS_PROJECT_GROUPID='com.example';", scanner.nextLine());
@@ -46,8 +47,22 @@ public class BashExporterUTest {
   }
 
   @Test
-  public void toEnvironmentVariable() throws Exception {
-    assertEquals("M2_CI_TOOLS_PROJECT_ARTIFACTID",
+  public void toDefaultEnvironmentVariable() throws Exception {
+    assertEquals(BashExporter.DEFAULT_VARIABLE_PREFIX+"PROJECT_ARTIFACTID",
+        this.bashExporter.toEnvironmentVariable("project.artifactId"));
+  }
+
+  @Test
+  public void toCustomEnvironmentVariable() throws Exception {
+    this.bashExporter.setVariablePrefix("CUSTOM_");
+    assertEquals("CUSTOM_PROJECT_ARTIFACTID",
+        this.bashExporter.toEnvironmentVariable("project.artifactId"));
+  }
+
+  @Test
+  public void toNullEnvironmentVariable() throws Exception {
+    this.bashExporter.setVariablePrefix(null);
+    assertEquals("PROJECT_ARTIFACTID",
         this.bashExporter.toEnvironmentVariable("project.artifactId"));
   }
 
