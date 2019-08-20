@@ -10,7 +10,31 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>A simple plugin to simplify continuous integration scripting.</description>
   <url>https://github.com/famaridon/ci-tools-maven-plugin</url>
+
+  <licenses>
+    <license>
+      <name>GNU General Public License v3.0</name>
+      <url>https://github.com/famaridon/ci-tools-maven-plugin/blob/master/LICENSE</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Florent Amaridon</name>
+      <email>florent.amaridon@gmail.com</email>
+      <organization>famaridon</organization>
+      <organizationUrl>https://github.com/famaridon</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/famaridon/ci-tools-maven-plugin.git</connection>
+    <developerConnection>scm:git:ssh://github.com:famaridon/ci-tools-maven-plugin.git</developerConnection>
+    <url>https://github.com/famaridon/ci-tools-maven-plugin/tree/master</url>
+  </scm>
 
   <prerequisites>
     <maven>${maven.version}</maven>
