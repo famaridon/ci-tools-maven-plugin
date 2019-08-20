@@ -46,9 +46,28 @@ public class BashExporterUTest {
     assertEquals("export M2_CI_TOOLS_PROJECT_ARTIFACTID='project-to-test';", output);
   }
 
+  /**
+   * test this IEEE Std 1003.1-2001 : https://stackoverflow.com/a/2821183/7500389
+   */
+  @Test
+  public void toIEEEStd() throws Exception {
+    assertEquals(BashExporter.DEFAULT_VARIABLE_PREFIX + "PROJECT____",
+        this.bashExporter.toEnvironmentVariable("project.$&="));
+  }
+
+  @Test
+  public void toIEEEStdDoNotBeginWithADigit() throws Exception {
+    assertEquals(BashExporter.DEFAULT_VARIABLE_PREFIX + "3_FRAMEWORK_VERSION",
+        this.bashExporter.toEnvironmentVariable("3.framework.version"));
+
+    this.bashExporter.setVariablePrefix(null);
+    assertEquals("_3_FRAMEWORK_VERSION",
+        this.bashExporter.toEnvironmentVariable("3.framework.version"));
+  }
+
   @Test
   public void toDefaultEnvironmentVariable() throws Exception {
-    assertEquals(BashExporter.DEFAULT_VARIABLE_PREFIX+"PROJECT_ARTIFACTID",
+    assertEquals(BashExporter.DEFAULT_VARIABLE_PREFIX + "PROJECT_ARTIFACTID",
         this.bashExporter.toEnvironmentVariable("project.artifactId"));
   }
 

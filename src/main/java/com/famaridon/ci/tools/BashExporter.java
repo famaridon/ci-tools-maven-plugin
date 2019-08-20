@@ -21,6 +21,7 @@ public class BashExporter {
 
   public static final String DEFAULT_VARIABLE_PREFIX = "M2_CI_TOOLS_";
   public static final String BASH_SHEBANG = "#!/usr/bin/env bash";
+  public static final String BASH_VARIABLE_UNSUPPORTED_CHARS_REGEX = "[^a-zA-Z0-9_]";
   private static final String EXPORT_TEMPLATE = "export {0}=''{1}'';";
 
   private final ExpressionEvaluator expressionEvaluator;
@@ -45,8 +46,11 @@ public class BashExporter {
     return MessageFormat.format(EXPORT_TEMPLATE, this.toEnvironmentVariable(expression), value);
   }
 
-  protected String toEnvironmentVariable(String expression) throws ExpressionEvaluationException {
-    return this.variablePrefix + expression.toUpperCase().replaceAll("\\.", "_").replaceAll("-", "_");
+  protected String toEnvironmentVariable(String expression) {
+    String variableName = this.variablePrefix + expression.toUpperCase()
+        .replaceAll(BASH_VARIABLE_UNSUPPORTED_CHARS_REGEX, "_");
+
+    return Character.isDigit(variableName.charAt(0)) ? '_' + variableName : variableName;
   }
 
   public String getVariablePrefix() {
