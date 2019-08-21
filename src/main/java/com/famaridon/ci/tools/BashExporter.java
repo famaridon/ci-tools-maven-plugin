@@ -22,7 +22,7 @@ public class BashExporter {
   public static final String DEFAULT_VARIABLE_PREFIX = "CI_TOOLS_";
   public static final String BASH_SHEBANG = "#!/usr/bin/env bash";
   public static final String BASH_VARIABLE_UNSUPPORTED_CHARS_REGEX = "[^a-zA-Z0-9_]";
-  private static final String EXPORT_TEMPLATE = "export {0}=''{1}'';";
+  private static final String EXPORT_TEMPLATE = "{0}=''{1}'';";
 
   private final ExpressionEvaluator expressionEvaluator;
   private String variablePrefix;
