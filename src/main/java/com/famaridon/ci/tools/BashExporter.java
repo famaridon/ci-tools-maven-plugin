@@ -19,7 +19,7 @@ import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator
 
 public class BashExporter {
 
-  public static final String DEFAULT_VARIABLE_PREFIX = "M2_CI_TOOLS_";
+  public static final String DEFAULT_VARIABLE_PREFIX = "CI_TOOLS_";
   public static final String BASH_SHEBANG = "#!/usr/bin/env bash";
   public static final String BASH_VARIABLE_UNSUPPORTED_CHARS_REGEX = "[^a-zA-Z0-9_]";
   private static final String EXPORT_TEMPLATE = "export {0}=''{1}'';";

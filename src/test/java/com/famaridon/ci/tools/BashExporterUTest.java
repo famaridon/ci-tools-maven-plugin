@@ -34,16 +34,16 @@ public class BashExporterUTest {
       assertTrue("bash MUST have hashbang", scanner.hasNextLine());
       assertEquals("hashbang MUST BE " + BashExporter.BASH_SHEBANG, BashExporter.BASH_SHEBANG,
           scanner.nextLine());
-      assertEquals("export M2_CI_TOOLS_PROJECT_ARTIFACTID='project-to-test';", scanner.nextLine());
-      assertEquals("export M2_CI_TOOLS_PROJECT_VERSION='1.0.0';", scanner.nextLine());
-      assertEquals("export M2_CI_TOOLS_PROJECT_GROUPID='com.example';", scanner.nextLine());
+      assertEquals("export CI_TOOLS_PROJECT_ARTIFACTID='project-to-test';", scanner.nextLine());
+      assertEquals("export CI_TOOLS_PROJECT_VERSION='1.0.0';", scanner.nextLine());
+      assertEquals("export CI_TOOLS_PROJECT_GROUPID='com.example';", scanner.nextLine());
     }
   }
 
   @Test
   public void testExportLine() throws Exception {
     String output = this.bashExporter.exportLine("project.artifactId");
-    assertEquals("export M2_CI_TOOLS_PROJECT_ARTIFACTID='project-to-test';", output);
+    assertEquals("export CI_TOOLS_PROJECT_ARTIFACTID='project-to-test';", output);
   }
 
   /**
