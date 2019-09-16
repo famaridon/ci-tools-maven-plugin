@@ -4,13 +4,19 @@ Simple maven plugin to create shell file with environment variable from pom expr
 
 ## Usage
 
-to generate the file you can run this command : 
+### CLI 
+
+To generate the file you can run this command : 
 
 ```bash
 mvn com.famaridon:ci-tools-maven-plugin:0.0.1-SNAPSHOT:environment
 ```
 
-or add the plugin declaration to your build.
+you can use **expressions** argument to specify expressions.
+
+```bash
+mvn com.famaridon:ci-tools-maven-plugin:0.0.1-SNAPSHOT:environment -Dexpressions=project.artifactId,project.version,project.groupId,project.build.sourceEncoding
+```
 
 This will produce ```./target/ci-tools-env.sh``` like this : 
 
@@ -19,10 +25,15 @@ This will produce ```./target/ci-tools-env.sh``` like this :
 CI_TOOLS_PROJECT_ARTIFACTID='ci-tools-maven-plugin';
 CI_TOOLS_PROJECT_VERSION='0.0.1-SNAPSHOT';
 CI_TOOLS_PROJECT_GROUPID='com.famaridon';
+CI_TOOLS_PROJECT_BUILD_SOURCEENCODING='UTF-8';
+
 ```
 
 
-If you need more variable configure plugin like this:
+
+### INITIALIZE build phase.
+
+You can generate the file during INITIALIZE maven phase like this.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>

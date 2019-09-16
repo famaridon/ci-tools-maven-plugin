@@ -41,24 +41,25 @@ public class EnvironmentMojo extends AbstractMojo {
   private MojoExecution mojoExecution;
 
   /**
-   * The current build session instance. This is used for
-   * plugin manager API calls.
+   * The current build session instance. This is used for plugin manager API calls.
    */
-  @Parameter( defaultValue = "${session}", readonly = true, required = true )
+  @Parameter(defaultValue = "${session}", readonly = true, required = true)
   protected MavenSession session;
 
-  /** lazy loading evaluator variable */
+  /**
+   * lazy loading evaluator variable
+   */
   private PluginParameterExpressionEvaluator evaluator;
 
-  @Parameter( defaultValue = "project.artifactId,project.version,project.groupId", readonly = true, required = true )
+  @Parameter(defaultValue = "project.artifactId,project.version,project.groupId", readonly = true, required = true, property = "expressions")
   protected List<String> expressions;
 
-  @Parameter( defaultValue = "${project.build.directory}/ci-tools-env.sh", readonly = true, required = true )
+  @Parameter(defaultValue = "${project.build.directory}/ci-tools-env.sh", readonly = true, required = true)
   protected File outputFile;
 
   public void execute() throws MojoExecutionException {
 
-    ExpressionEvaluator evaluator = new PluginParameterExpressionEvaluator( session, mojoExecution );
+    ExpressionEvaluator evaluator = new PluginParameterExpressionEvaluator(session, mojoExecution);
 
     BashExporter bashExporter = new BashExporter(evaluator);
     try {
