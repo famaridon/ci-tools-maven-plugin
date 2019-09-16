@@ -10,9 +10,7 @@ import org.apache.maven.lifecycle.internal.MojoDescriptorCreator;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.PluginParameterExpressionEvaluator;
-import org.apache.maven.plugin.descriptor.MojoDescriptor;
 import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -73,36 +71,4 @@ public class EnvironmentMojo extends AbstractMojo {
     }
   }
 
-  /**
-   * copied from:  https://github.com/apache/maven-help-plugin/blob/master/src/main/java/org/apache/maven/plugins/help/EvaluateMojo.java
-   */
-  private PluginParameterExpressionEvaluator getEvaluator()
-      throws MojoExecutionException, MojoFailureException
-  {
-    if ( evaluator == null )
-    {
-      MojoDescriptor mojoDescriptor;
-      try
-      {
-        mojoDescriptor = mojoDescriptorCreator.getMojoDescriptor( "help:evaluate", session, project );
-      }
-      catch ( Exception e )
-      {
-        throw new MojoFailureException( "Failure while evaluating.", e );
-      }
-      MojoExecution mojoExecution = new MojoExecution( mojoDescriptor );
-
-      MavenProject currentProject = session.getCurrentProject();
-      // Maven 3: PluginParameterExpressionEvaluator gets the current project from the session:
-      // synchronize in case another thread wants to fetch the real current project in between
-      synchronized ( session )
-      {
-        session.setCurrentProject( project );
-        evaluator = new PluginParameterExpressionEvaluator( session, mojoExecution );
-        session.setCurrentProject( currentProject );
-      }
-    }
-
-    return evaluator;
-  }
 }

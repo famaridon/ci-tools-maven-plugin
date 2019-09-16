@@ -22,18 +22,14 @@
         <executions>
           <execution>
             <id>environment</id>
-            <phase>validate</phase>
+            <phase>initialize</phase>
             <goals>
               <goal>environment</goal>
             </goals>
+            <configuration>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <expressions>
-            <expression>project.artifactId</expression>
-            <expression>project.build.sourceEncoding</expression>
-          </expressions>
-        </configuration>
       </plugin>
     </plugins>
   </build>
